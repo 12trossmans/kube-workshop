@@ -9,4 +9,14 @@ images:
     newName: mongo:5.0
 
 patches:
-  - overrides.yaml
+  # patchesStrategicMerge
+  - path: overrides.yaml
+
+  # patchesJson6902
+  - target:
+      kind: StatefulSet
+      name: mongodb
+    patch: |-
+      - op: replace
+        path: /spec/volumeClaimTemplates/0/spec/storageClassName
+        value: local-path
